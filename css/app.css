@@ -34,7 +34,6 @@ input {
 .application .bg {
     padding: 300px 0 0;
     background-image: url(../image/background.jpg);
-
     background-size: cover;
     background-position: center;
     border-radius: 25px;
@@ -95,8 +94,13 @@ input {
     border-color: #ffffff;
     border-width: 2px;
     border-radius: 2px;
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
     /* 箭头变手 */
+}
+
+#on-off:hover {
+    background-color: #e2dea2;
 }
 
 .osc-controls form span {
@@ -130,20 +134,48 @@ input {
     text-align: center;
 }
 
-#sawtooth {
+#sine {
     background-color: #a5c8dd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
-#sine {
+#sine:hover {
+    background-color:#e2dea2;
+}
+
+#sawtooth {
     background-color: #708fd3;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#sawtooth:hover {
+    background-color: #e2dea2;
 }
 
 #triangle {
     background-color: #556dbb;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#triangle:hover {
+    background-color: #e2dea2;
 }
 
 #square {
     background-color: #445d85;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#square:hover {
+    background-color: #e2dea2;
 }
 
 #oscillator-list {

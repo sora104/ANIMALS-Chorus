@@ -1,6 +1,12 @@
 body {
+    margin: 0;
+    padding: 0;
     background-color: rgba(65, 91, 146, 0.658);
-    font-family: "Arial";
+    font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Noto Sans,ui-sans-serif,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji,Arial;
+}
+
+::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
 }
 
 .application {
@@ -19,13 +25,14 @@ input {
 }
 
 .title {
-    width: 1000px;
+    width: 100%;
     padding: 20px 0 30px;
 }
 
 .title h1 {
     margin: 0;
-    font-size: 50px;
+    font-size: 72px;
+    font-weight: 900;
     text-align: center;
     color: #ffffff;
 
@@ -36,7 +43,7 @@ input {
     background-image: url(../image/background.jpg);
     background-size: cover;
     background-position: center;
-    border-radius: 25px;
+    border-radius: 20px;
 }
 
 .application .bg .bear {
@@ -74,9 +81,9 @@ input {
 
 .osc-controls {
     float: left;
-    width: 496px;
-    height: 200px;
-    margin: 20px 0;
+    width: calc(50% - 4px);
+    height: 240px;
+    margin: 0;
     border-style: solid;
     border-color: #ffffff;
     border-width: 2px;
@@ -89,22 +96,82 @@ input {
 }
 
 #on-off {
-    background-color: rgb(25, 34, 75);
-    border-style: solid;
-    border-color: #ffffff;
-    border-width: 2px;
-    border-radius: 2px;
-    transition: all 0.3s ease-in-out;
+    --glow-color: rgb(176, 177, 255);
+    --glow-spread-color: rgba(123, 127, 255, 0.781);
+    --enhanced-glow-color: rgb(206, 212, 255);
+    --btn-color: rgb(58, 71, 248);
+    box-shadow: 0 0 .01em .01em var(--glow-color),
+           0 0 0.1em .05em var(--glow-spread-color),
+           inset 0 0 .05em .05em var(--glow-color);
+    text-shadow: 0 0 .05em var(--glow-color);
+
     cursor: pointer;
-    /* 箭头变手 */
+    position: relative;
+    width: 90px;
+    padding: 8px 6px;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--glow-color);
+    background: var(--btn-color);
+    border: 0.05em solid var(--glow-color);
+    border-radius: 0.5em;
+    transition: all .3s;
+    outline: none;
 }
 
 #on-off:hover {
-    background-color: #e2dea2;
+    z-index: 1;
+    border-color: transparent;
+    color: var(--btn-color);
+    background: linear-gradient(
+        90deg,
+        #f9d923,
+        #a5c8dd,
+        #708fd3,
+        #cb49ff,
+        #f9d923
+    );
+    background-size: 400%;
+    animation: glow 12s linear forwards;
+    box-shadow: 0 0 .05em .05em var(--glow-color),
+           0 0 0.5em .5em var(--glow-spread-color),
+           inset 0 0 .01em .01em var(--glow-color);
+}
+
+@keyframes glow {
+
+    from {
+        background-position: 0%;
+    }
+
+    to {
+        background-position: 400%;
+    }
+
+}
+
+#on-off::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    left: -1px;
+    background: inherit;
+    filter: blur(36px);
+    opacity: 0;
+    transition: .4s ease-out;
+}
+
+#on-off:hover::before {
+    opacity: 1; 
+    z-index: -1;
 }
 
 .osc-controls form span {
     font-size: 24px;
+    font-weight: 600;
 }
 
 .osc-controls form div {
@@ -118,7 +185,7 @@ input {
 }
 
 .osc-controls form input {
-    width: 100px;
+    width: 15%;
     margin-right: 30px;
     font-size: 20px;
     color: #ffffff;
@@ -196,11 +263,108 @@ input {
 
 .foot {
     float: left;
-    width: 1000px;
+    width: 100%;
+    margin: 20px 0;
     text-align: center;
     color: #ffffff;
 }
 
 .foot p {
-    margin: 20px 0 10px 0;
+    margin: 10px 0;
+    padding: 0 30px;
+}
+
+.foot p a {
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    transition: all 0.5s ease;
+}
+
+.foot p a:hover {
+    color: #37FF8B;
+}
+
+.drum-kit {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.drum-set {
+    height: 200px;
+    padding: 0;
+    margin: 40px 0 40px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.drum-set .drum {
+    height: 200px;
+    width: 200px;
+    margin: 0 25px 0;
+    cursor: pointer;
+    font-size: 40px;
+    color: #ffffff;
+    text-align: center;
+    line-height: 200px;
+    transition: all 0.5s ease;
+}
+
+.drum-set .drum:hover {
+    color: #ffff37;
+}
+
+#hihat {
+    background-image: url(../image/HH.png);
+    background-size: cover;
+    background-position: center;
+}
+
+#kick {
+    background-image: url(../image/Kick.png);
+    background-size: cover;
+    background-position: center;
+}
+
+#shaker {
+    background-image: url(../image/Tom.png);
+    background-size: cover;
+    background-position: center;
+}
+
+#snare {
+    background-image: url(../image/Snare.png);
+    background-size: cover;
+    background-position: center;
+}
+
+@media screen and (max-width: 576px) {
+    .application {
+        width: 100%;
+    }
+
+    .application .bg .bear {
+        margin: 0 25%;
+    }
+
+    .application .bg {
+        padding: 200px 0 0;
+        border-radius: 10px;
+    }
+
+    .osc-controls {
+        width: calc(100% - 4px);
+        height: 250px;
+    }
+
+    .drum-set {
+        height: 510px;
+    }
+    
+    .drum-set .drum {
+        height: 120px;
+        line-height: 120px;
+    }
 }

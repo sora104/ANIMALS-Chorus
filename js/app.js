@@ -1,5 +1,4 @@
 "use strict";
-alert('Please turn down the volume before starting!'); // 打开网页弹窗
 function audioContextCheck() {
     if (typeof AudioContext !== "undefined") {
         return new AudioContext();
@@ -14,7 +13,17 @@ function audioContextCheck() {
         throw new Error('AudioContext not supported')
     }
 }
+
 var audioContext = audioContextCheck();
+
+var sound = audioBatchLoader({
+    kick: "./sounds/Kick.wav",
+    snare: "./sounds/Snare.wav",
+    hihat: "./sounds/Hi-Hat.wav",
+    shaker: "./sounds/Tom.wav"
+
+});
+
 window.onload = function () {
     var onOff = document.getElementById("on-off");
     /*_____________________________________BEGIN set initial osc state to false*/
@@ -28,6 +37,23 @@ window.onload = function () {
     var waveformTypes = document.getElementsByTagName('li');
     var defultWaveformElement = document.getElementById(selectedWaveform);
     defultWaveformElement.classList.add("selected-waveform");
+    var kick = document.getElementById("kick");
+    var snare = document.getElementById("snare");
+    var hihat = document.getElementById("hihat");
+    var shaker = document.getElementById("shaker");
+    kick.addEventListener("click", function() {
+        sound.kick.play();
+    });
+    snare.addEventListener("click", function() {
+        sound.snare.play();
+    });
+    hihat.addEventListener("click", function() {
+        sound.hihat.play();
+    });
+    shaker.addEventListener("click", function() {
+        sound.shaker.play();
+    });
+
     function select() {
         var selectedWaveformElement = document.getElementById(this.id);
         selectedWaveform = document.getElementById(this.id).id;
@@ -65,7 +91,7 @@ window.onload = function () {
             freqValue = document.getElementsByTagName("input")[1].value; // 调用变量来存储鼠标x轴位置坐标为频率值
             volValue = document.getElementsByTagName("input")[2].value; // 调用变量来存储鼠标y轴位置坐标为音量
             osc.frequency.value = freqValue / 2; // 音高除二
-            gainNode.gain.value = volValue / 2000;
+            gainNode.gain.value = volValue / 3000;
             console.log("Oscillator is playing. Frequency value is " + osc.frequency.value);
             console.log("Oscillator is playing. Volume value is " + gainNode.gain.value);
             spanslide.innerHTML = "Frequency: " + osc.frequency.value + "Hz"; // 实时显示xy轴数据
@@ -87,7 +113,7 @@ window.onload = function () {
             osc.connect(gainNode); // gainNode控制振荡器音量
             osc.start(audioContext.currentTime);
             onOff.value = "stop";
-            span.innerHTML = "Click to stop oscillator";
+            span.innerHTML = "Click to stop";
             spanslide.innerHTML = "Frequency: " + osc.frequency.value + "Hz";
             /*_____________________________Otherwise stop it and reset osc to false for next time.*/
         } else {
@@ -95,8 +121,48 @@ window.onload = function () {
             osc = false;
             gainNode = false;
             onOff.value = "start";
-            span.innerHTML = "Click to start oscillator";
+            span.innerHTML = "Click to start";
         }
         /*_________________________________END Conditional statement to check if osc is TRUE or FALSE*/
     });
 };
+
+function audioFileLoader(fileDirectory) {
+    var soundObj = {};
+    var playSound = undefined;
+    var getSound = new XMLHttpRequest();
+    soundObj.fileDirectory = fileDirectory;
+    getSound.open("GET", soundObj.fileDirectory, true);
+    getSound.responseType = "arraybuffer";
+    getSound.onload = function() {
+        audioContext.decodeAudioData(getSound.response, function(buffer) {
+            soundObj.soundToPlay = buffer;
+
+        });
+    };
+
+    getSound.send();
+
+    soundObj.play = function(time) {
+        playSound = audioContext.createBufferSource();
+        playSound.buffer = soundObj.soundToPlay;
+        playSound.connect(audioContext.destination);
+        playSound.start(audioContext.currentTime + time || audioContext.currentTime);
+    };
+
+    soundObj.stop = function(time) {
+        playSound.stop(audioContext.currentTime + time || audioContext.currentTime);
+    };
+    return soundObj;
+}
+
+function audioBatchLoader(obj) {
+
+    for (var prop in obj) {
+        obj[prop] = audioFileLoader(obj[prop]);
+
+    }
+
+    return obj;
+
+}

@@ -12,7 +12,6 @@ $(function() {
     var length = analyser.frequencyBinCount*44100/context.sampleRate|0;
     //创建数据
     console.log(length);
-    //length=1500;
     var output_f = new Uint8Array(length);
 
     function update() {

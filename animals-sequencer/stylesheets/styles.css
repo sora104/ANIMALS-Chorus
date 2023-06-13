@@ -13,7 +13,7 @@ body {
   background-size: cover;
   background-position: center; */
   cursor: url(../images/naonao.png), pointer;
-  background-color: #cfe8cc;
+  background-color: #F5ECD7;
 }
 
 .cursorchange {
@@ -34,12 +34,14 @@ h1 {
   font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Noto Sans,ui-sans-serif,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji,Arial;
   font-weight: 900;
   font-size: 56px;
+  color: #833500;
 }
 
 h2 {
   font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Noto Sans,ui-sans-serif,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji,Arial;
   font-weight: 900;
   font-size: 42px;
+  color: #833500;
 }
 
 strong {
@@ -56,7 +58,7 @@ strong {
   margin: 10px 0;
   font-size: 20px;
   z-index: 999;
-  background-color: rgba(127, 255, 212, 0.5);
+  background-color: #8334006b;
   border-radius: 10px;
   background-image: url(../images/controlbar.png);
   background-repeat: no-repeat;
@@ -226,15 +228,15 @@ strong {
 }
 
 .selected {
-  background-color: rgb(26, 158, 0);
+  background-color: #F18F01;
 }
 
 .playing {
-  background-color: rgb(134, 134, 134);
+  background-color: #c2baa6;
 }
 
 .playing.selected {
-  background-color: rgb(251, 255, 0); 
+  background-color: #68a67d; 
 }
 
 .noselect {
@@ -286,7 +288,7 @@ strong {
 }
 
 .btn-default {
-  color: #0223b4;
+  color: #833500;
   background-color: transparent;
 }
 
@@ -425,7 +427,7 @@ canvas {
   width: 600px;
   height: 30px;
   border: 0;
-  color: #000000;
+  color: #833500;
   background-color: transparent;
   font-size: 30px;
   line-height: 30px;
@@ -448,7 +450,7 @@ canvas {
 }
 
 .catagories .column>a {
-  color: #000000;
+  color: #833500;
   background-color: transparent;
   font-size: 20px;
   line-height: 50px;

@@ -1,4 +1,3 @@
-//audio node variables
 var context;
 var convolver;
 var compressor;
@@ -151,48 +150,35 @@ function init() {
   loadImpulseResponses();
 }
 
+// _________________________________________________________________
+
 function initializeAudioNodes() {
   context = new webkitAudioContext();
   var finalMixNode;
   if (context.createDynamicsCompressor) {
-      // Create a dynamics compressor to sweeten the overall mix.
+      // 创建压缩器
       compressor = context.createDynamicsCompressor();
       compressor.connect(context.destination);
       finalMixNode = compressor;
   } else {
-      // No compressor available in this implementation.
       finalMixNode = context.destination;
   }
 
-
-  // Create master volume.
-  // for now, the master volume is static, but in the future there will be a slider
+  // 控制总音量
   masterGainNode = context.createGain();
-  masterGainNode.gain.value = 0.7; // reduce overall volume to avoid clipping
+  masterGainNode.gain.value = 0.7;
   masterGainNode.connect(finalMixNode);
 
-  //connect all sounds to masterGainNode to play them
+  //connect所有声音到masterGainNode
 
-  //don't need this for now, no wet dry mix for effects
-  // // Create effect volume.
-  // effectLevelNode = context.createGain();
-  // effectLevelNode.gain.value = 1.0; // effect level slider controls this
-  // effectLevelNode.connect(masterGainNode);
-
-  // Create convolver for effect
   convolver = context.createConvolver();
   convolver.active = false;
-  // convolver.connect(effectLevelNode);
 
-  //Create Low Pass Filter
   equalizerNode = context.createBiquadFilter();
-  //this is for backwards compatibility, the type used to be an integer
-  equalizerNode.type = "lowpass"; // LOWPASS
-  //default value is max cutoff, or passing all frequencies
+  equalizerNode.type = "lowpass";
   equalizerNode.frequency.value = context.sampleRate / 2;
   equalizerNode.connect(masterGainNode);
   equalizerNode.active = false;
-
   
   distortion = context.createWaveShaper();
   distortion.active = false;
@@ -214,16 +200,15 @@ function initializeAudioNodes() {
   distortion.curve = makeDistortionCurve(400);
   distortion.oversample = '4x';
 
+  // 可视化
   analyser = context.createAnalyser();
 
 }
 
+
 function loadKits() {
-  //name must be same as path
   var kit = new Kit("animals");
   kit.load();
-
-  //TODO: figure out how to test if a kit is loaded
   currentKit = kit;
 }
 
@@ -232,8 +217,6 @@ function loadImpulseResponses() {
   reverbImpulseResponse.load();
 }
 
-
-//TODO delete this
 function loadTestBuffer() {
   var request = new XMLHttpRequest();
   var url = "http://www.freesound.org/data/previews/102/102130_1721044-lq.mp3";
@@ -254,7 +237,7 @@ function loadTestBuffer() {
   request.send();
 }
 
-//TODO delete this
+// 音序器按钮
 function sequencePads() {
   $('.pad.selected').each(function() {
     $('.pad').removeClass("selected");
@@ -267,6 +250,7 @@ function parametric(inputConnection, outputConnection) {
   masterGainNode.connect(outputConnection);
 }
 
+// 声音输出
 function playNote(buffer, noteTime) {
   var voice = context.createBufferSource();
   voice.buffer = buffer;
@@ -296,7 +280,7 @@ function playNote(buffer, noteTime) {
 function schedule() {
   var currentTime = context.currentTime;
 
-  // The sequence starts at startTime, so normalize currentTime so that it's 0 at the start of the sequence.
+  // 初始化时间
   currentTime -= startTime;
 
   while (noteTime < currentTime + 0.200) {
@@ -327,9 +311,7 @@ function schedule() {
           case "ta":
             playNote(currentKit.taBuffer, contextPlayTime);
             break;
-        }
-          //play the buffer
-          //store a data element in the row that tells you what instrument
+          }
         }
       });
       if (noteTime != lastDrawTime) {
@@ -338,14 +320,12 @@ function schedule() {
       }
       advanceNote();
   }
-
   timeoutId = requestAnimationFrame(schedule)
 }
 
 function drawPlayhead(xindex) {
     var lastIndex = (xindex + LOOP_LENGTH - 1) % LOOP_LENGTH;
 
-    //can change this to class selector to select a column
     var $newRows = $('.column_' + xindex);
     var $oldRows = $('.column_' + lastIndex);
     
@@ -354,9 +334,6 @@ function drawPlayhead(xindex) {
 }
 
 function advanceNote() {
-    // Advance time by a 16th note...
-    // var secondsPerBeat = 60.0 / theBeat.tempo;
-    //TODO CHANGE TEMPO HERE, convert to float
     tempo = Number($("#tempo-input").val());
     var secondsPerBeat = 60.0 / tempo;
     rhythmIndex++;
@@ -364,14 +341,7 @@ function advanceNote() {
         rhythmIndex = 0;
     }
    
-    //0.25 because each square is a 16th note
     noteTime += 0.25 * secondsPerBeat
-    // if (rhythmIndex % 2) {
-    //     noteTime += (0.25 + kMaxSwing * theBeat.swingFactor) * secondsPerBeat;
-    // } else {
-    //     noteTime += (0.25 - kMaxSwing * theBeat.swingFactor) * secondsPerBeat;
-    // }
-
 }
 
 function handlePlay(event) {

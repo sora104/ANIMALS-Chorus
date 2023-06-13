@@ -30,7 +30,6 @@ Kit.prototype.load = function() {
 
   var pathName = this.pathName();
 
-  //don't want to have set number of instruments, or whatever
   var guPath = pathName + "gu.wav";
   var miaoPath = pathName + "miao.wav";
   var duckPath = pathName + "duck.wav";
@@ -48,12 +47,9 @@ Kit.prototype.load = function() {
   this.loadSample(taPath, "ta");
 };
 
-//also make a class per buffer/sample? can store prettified name?
 
-//this should definitely be part of a sample class, pass in kit or st
-//if we have the name of a sample type, then we can do metaprogramming awesomeness. 
 Kit.prototype.loadSample = function(url, instrumentName) {
-  //need 2 load asynchronously 
+
   var request = new XMLHttpRequest();
   request.open("GET", url, true);
   request.responseType = "arraybuffer";
@@ -91,7 +87,7 @@ Kit.prototype.loadSample = function(url, instrumentName) {
         }
       },
       function(buffer) {
-        console.log("Error decoding drum samples!");
+        console.log("Error decoding samples!");
       }
     );
   }

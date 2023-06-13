@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polar Bear - Theremin</title>
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="application">
+        <div class="title">
+            <h1>Polar Bear - Theremin</h1>
+        </div>
+        <!-- 引入背景图和北极熊 -->
+        <div class="bg">
+            <div class="bear"></div>
+        </div>
+        <!-- 鼓组 -->
+        <h1 class="drum-kit">Drum-Kit</h1>
+        <div class="drum-set">
+            <h5 class="drum" id="hihat" value="Hi-Hat">Hi-Hat
+            </h5>
+            <h5 class="drum" id="kick" value="Kick">Kick
+            </h5>
+            <h5 class="drum" id="shaker" value="Shaker">Tom
+            </h5>
+            <h5 class="drum" id="snare" value="Snare">Snare
+            </h5>
+        </div>
+        <div class="osc-controls">
+            <form>
+                <input id="on-off" type="button" value="start">
+                <span>Click to start</span>
+                <div>Move mouser to modify oscillator's frequency and Volume.</div>
+                <p>Frequency</p>
+                <!-- 删掉了滑块加入两个input来显示鼠标的位置信息 -->
+                X:
+                <input id="xPos" type="text" />
+                Y:
+                <input id="yPos" type="text" />
+            </form>
+        </div>
+        <div class="osc-controls">
+            <h2>Waveform</h2>
+            <ul id="oscillator-list">
+                <li id="sine"> sine</li>
+                <li id="sawtooth">sawtooth</li>
+                <li id="triangle">triangle</li>
+                <li id="square">square</li>
+            </ul>
+        </div>
+        <a href="../index.html" class="backtopre"></a>
+        <div class="foot">
+            <p>Designed by 
+                <a href="#">
+                    Xiaorong Shao
+                </a>
+             (MPF2021125)
+            </p>
+            <p>Shanghai Conservatory of Music - 《音乐类在线应用的设计与开发》</p>
+        </div>
+    </div>
+</body>
+
+</html>

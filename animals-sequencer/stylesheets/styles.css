@@ -352,6 +352,25 @@ canvas {
   z-index: 99;
 }
 
+.backtopre {
+  position: fixed;
+  left: 2%;
+  top: 3%;
+  z-index: 999;
+  width: 100px;
+  height: 50px;
+  background-image: url(../images/shasha.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.backtopre:hover {
+  background-color: #d3660191;
+}
+
 .backtotop {
   display: none;
   position: fixed;
@@ -423,8 +442,8 @@ canvas {
 .body-foot .name a {
   position: absolute;
   top: 0;
-  left: calc(50% - 225px);
-  width: 600px;
+  left: calc(50% - 434px);
+  width: 868px;
   height: 30px;
   border: 0;
   color: #833500;
